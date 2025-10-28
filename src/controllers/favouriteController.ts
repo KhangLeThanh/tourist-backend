@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import pool from "../db";
 
 export const addFavourite = async (req: Request, res: Response) => {
-  const { name, address } = req.body;
+  const { name, address, type } = req.body;
   if (!name || !address) {
     return res.status(400).json("Name or Address is missing");
   }
   try {
     const result = await pool.query(
-      "INSERT INTO favourites (name, address) VALUES ($1, $2) RETURNING *",
-      [name, address]
+      "INSERT INTO favourites (name, address, type) VALUES ($1, $2, $3) RETURNING *",
+      [name, address, type]
     );
     res.status(201).json(result.rows[0]);
   } catch (err: any) {
