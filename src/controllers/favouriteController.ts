@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import pool from "../db";
 
 export const addFavourite = async (req: Request, res: Response) => {
-  const { name, address, type } = req.body;
+  const { id, name, address, type } = req.body;
   if (!name || !address) {
     return res.status(400).json("Name or Address is missing");
   }
   try {
     const result = await pool.query(
-      "INSERT INTO favourites (name, address, type) VALUES ($1, $2, $3) RETURNING *",
-      [name, address, type]
+      "INSERT INTO favourites (id, name, address, type) VALUES ($1, $2, $3, $4) RETURNING *",
+      [id, name, address, type]
     );
     res.status(201).json(result.rows[0]);
   } catch (err: any) {
@@ -17,7 +17,7 @@ export const addFavourite = async (req: Request, res: Response) => {
   }
 };
 
-export const getFavourite = async (res: Response) => {
+export const getFavourite = async (req: Request, res: Response) => {
   try {
     const result = await pool.query("SELECT * FROM favourites");
     res.status(200).json(result.rows);
@@ -27,8 +27,8 @@ export const getFavourite = async (res: Response) => {
 };
 
 export const removeFavourite = async (req: Request, res: Response) => {
-  const id = req.params;
-  if (!id || isNaN(Number(id))) {
+  const { id } = req.params;
+  if (!id) {
     return res.status(400).json({ error: "Invalid favourite ID" });
   }
   try {
