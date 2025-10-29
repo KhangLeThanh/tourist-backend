@@ -20,7 +20,6 @@ This is the **backend server** for the Tourist App. Handles storing favourites a
 - Node.js + Express
 - PostgreSQL
 - TypeScript
-- Axios (optional for external API calls)
 - dotenv for environment variables
 
 ## Getting Started
