@@ -34,7 +34,7 @@ This is the **backend server** for the Tourist App. Handles storing favourites a
 ### Installation
 
 ```bash
-git clone <backend-repo-url>
+git clone https://github.com/KhangLeThanh/tourist-backend
 cd backend
 npm install
 ```
